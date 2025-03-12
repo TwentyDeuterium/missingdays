@@ -12,8 +12,17 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background: #f0f2f5;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
+          
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
 
         .container {
             text-align: center;
@@ -23,7 +32,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        #days-counter {
+        #counter {
             font-size: 4rem;
             color: #2c3e50;
             margin: 1rem 0;
@@ -38,26 +47,46 @@
 <body>
     <div class="container">
         <div class="description">自 🎯 目标日已过去</div>
-        <div id="days-counter">0</div>
-        <div class="description">天</div>
+        <div id="counter">0</div>
+        <!-- <div class="description">天</div> -->
     </div>
 
     <script>
         // 设置目标日期（格式：YYYY-MM-DD）
-        const targetDate = new Date('2025-03-11');
+        const targetDate = new Date('2025-03-10T12:00:00');
         
-        function updateCounter() {
+        /* function updateCounter() {
             const now = new Date();
             const timeDifference = now - targetDate;
             const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
             
             document.getElementById('days-counter').textContent = daysPassed;
-        }
+        } */
+
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - targetDate;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / (1000));
+          
+             // 格式化为两位数
+            const formattedHours = hours.toString().padStart(2, '0');
+            const formattedMinutes = minutes.toString().padStart(2, '0');
+            const formattedSeconds = seconds.toString().padStart(2, '0');
+
+            document.getElementById('counter').innerHTML = `
+              <div>${days}天</div>
+              <div>${formattedHours}时${formattedMinutes}分${formattedSeconds}秒</div>
+            `;
+          }
 
         // 初始更新
         updateCounter();
         // 每分钟更新一次
-        setInterval(updateCounter, 60000);
+        setInterval(updateCounter, 1000);
     </script>
 </body>
 </html>
