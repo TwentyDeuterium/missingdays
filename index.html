@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天数计时器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f0f2f5;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #days-counter {
+            font-size: 4rem;
+            color: #2c3e50;
+            margin: 1rem 0;
+        }
+
+        .description {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="description">自 🎯 目标日已过去</div>
+        <div id="days-counter">0</div>
+        <div class="description">天</div>
+    </div>
+
+    <script>
+        // 设置目标日期（格式：YYYY-MM-DD）
+        const targetDate = new Date('2025-03-11');
+        
+        function updateCounter() {
+            const now = new Date();
+            const timeDifference = now - targetDate;
+            const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('days-counter').textContent = daysPassed;
+        }
+
+        // 初始更新
+        updateCounter();
+        // 每分钟更新一次
+        setInterval(updateCounter, 60000);
+    </script>
+</body>
+</html>
